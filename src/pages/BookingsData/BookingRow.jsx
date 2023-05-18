@@ -5,7 +5,7 @@ const BookingRow = ({ booking, setLoad, load }) => {
     const hanldeDelete = id => {
         const peced = confirm('are you sure ?')
         if(peced){
-            fetch(`http://localhost:5000/bookings/${id}`, {
+            fetch(`https://car-doctor-server-alpha-seven.vercel.app/bookings/${id}`, {
                 method:'DELETE'
             })
             .then(res => res.json())
