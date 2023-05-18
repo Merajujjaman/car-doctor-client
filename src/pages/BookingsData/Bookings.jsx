@@ -1,23 +1,37 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingRow from "./BookingRow";
+import { useNavigate } from "react-router-dom";
+
 
 
 const Bookings = () => {
+    const navigate = useNavigate()
     const { user } = useContext(AuthContext)
     const [bookings, setBookings] = useState([])
     const [load, setLoad] = useState(false)
 
+    const url = `http://localhost:5000/bookings?email=${user?.email}`
     useEffect(() => {
-        fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+        fetch( url ,{
+            method: 'GET',
+            headers: {
+                authorization :`bearer ${localStorage.getItem('car-access-token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                setBookings(data)
+                if(!data.error){
+
+                    setBookings(data)
+                }
+                else{
+                    navigate('/')
+                }
             })
-    }, [load])
+    }, [load, url, navigate])
 
     return (
         <div className="my-8">
