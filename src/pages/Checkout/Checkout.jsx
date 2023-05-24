@@ -4,8 +4,9 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const Checkout = () => {
     const service = useLoaderData()
+    
     const {user} = useContext(AuthContext)
-    console.log(service);
+   
     const { _id, title, img, price,  } = service;
     const handleOrder = event => {
         event.preventDefault()
